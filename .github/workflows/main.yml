@@ -1,0 +1,60 @@
+name: Build Angular Project
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Angular App
+        run: npm run build -- --configuration=production
+
+      - name: Deploy to 'build' Branch
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+
+          # Save current commit info
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+
+          # Create a temp folder to hold the build
+          mkdir temp-deploy
+          cp -r dist/* temp-deploy/
+
+          # Checkout build branch (or create it)
+          git fetch origin
+          if git ls-remote --exit-code --heads origin build; then
+            git checkout build
+            git reset --hard origin/build
+          else
+            git checkout --orphan build
+          fi
+
+          # Clean old files and copy new build
+          git rm -rf .
+          cp -r temp-deploy/* .
+          rm -rf temp-deploy
+
+          # Commit and push
+          git add .
+          git commit -m "Build from ${COMMIT_HASH}"
+          git push origin build --force
