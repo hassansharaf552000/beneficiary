@@ -13,6 +13,7 @@ A comprehensive Angular-based web application for managing beneficiaries with ro
 - [API Documentation](#api-documentation)
 - [Components Overview](#components-overview)
 - [Authentication & Authorization](#authentication--authorization)
+- [Deployment & CI/CD](#deployment--cicd)
 
 ## 🎯 Overview
 
@@ -651,3 +652,40 @@ Sort arrays by specified field and order.
   data: { roles: ['Admin'] }
 }
 ```
+
+## 🚀 Deployment & CI/CD
+
+### Automated CI/CD Pipeline
+
+This project is configured with automated deployment to DigitalOcean App Platform. The application automatically deploys to the production environment when changes are pushed to the `main` branch.
+
+#### 🌐 Live Application
+**Production URL:** https://hammerhead-app-owbjh.ondigitalocean.app/
+
+#### 📋 CI/CD Workflow
+
+The deployment process follows these steps:
+
+1. **Code Push to Main Branch**
+   ```bash
+   git add .
+   git commit -m "Your commit message"
+   git push origin main
+   ```
+
+2. **Automatic Deployment Trigger**
+   - DigitalOcean App Platform detects changes in the main branch
+   - Automatically starts the build and deployment process
+   - No manual intervention required
+
+3. **Build Process**
+   - Installs dependencies: `npm install`
+   - Runs production build: `npm run build`
+   - Optimizes assets and creates distribution files
+   - Runs any configured tests (optional)
+
+4. **Deployment Process**
+   - Deploys the built application to DigitalOcean servers
+   - Updates the live application at the production URL
+   - Performs health checks to ensure successful deployment
+
