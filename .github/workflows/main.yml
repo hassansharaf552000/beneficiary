@@ -3,7 +3,7 @@ name: Build Angular Project
 on:
   push:
     branches:
-      - main
+      - main  # Change this if needed
   pull_request:
     branches:
       - main
@@ -28,33 +28,24 @@ jobs:
       - name: Build Angular App
         run: npm run build -- --configuration=production
 
-      - name: Deploy to 'build' Branch
+      - name: Create or Switch to 'build' Branch
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-
-          # Save current commit info
-          COMMIT_HASH=$(git rev-parse --short HEAD)
-
-          # Create a temp folder to hold the build
-          mkdir temp-deploy
-          cp -r dist/* temp-deploy/
-
-          # Checkout build branch (or create it)
+          
+          # Fetch all branches
           git fetch origin
-          if git ls-remote --exit-code --heads origin build; then
+          
+          # Check if 'build' branch exists
+          if git show-ref --verify --quiet refs/remotes/origin/build; then
             git checkout build
-            git reset --hard origin/build
           else
-            git checkout --orphan build
+            git checkout -b build
           fi
-
-          # Clean old files and copy new build
+          
+          # Copy build output and push
           git rm -rf .
-          cp -r temp-deploy/* .
-          rm -rf temp-deploy
-
-          # Commit and push
+          cp -r dist/* .
           git add .
-          git commit -m "Build from ${COMMIT_HASH}"
+          git commit -m "Update build output"
           git push origin build --force
