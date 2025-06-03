@@ -26,7 +26,7 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Build Angular App
-        run: npm run build
+        run: npm run build -- --configuration=production
 
       - name: Create or Switch to 'build' Branch
         run: |
@@ -45,7 +45,7 @@ jobs:
           
           # Copy build output and push
           git rm -rf .
-          cp -r dist/* .
+          cp -r dist/beneficiary/browser* .
           git add .
           git commit -m "Update build output"
           git push origin build --force
