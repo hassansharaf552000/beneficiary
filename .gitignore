@@ -55,9 +55,7 @@ yarn-error.log*
 node_modules/bootstrap/
 node_modules/@fortawesome/fontawesome-free/
 
-# Angular environment files
-src/environments/environment.prod.ts
-src/environments/environment.ts
+
 
 # Cypress / Playwright testing
 cypress/videos/
