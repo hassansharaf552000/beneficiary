@@ -45,7 +45,7 @@ jobs:
           
           # Copy build output and push
           git rm -rf .
-          cp -r dist/* .
+          cp -r dist/beneficiary/browser* .
           git add .
           git commit -m "Update build output"
           git push origin build --force
