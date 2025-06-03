@@ -1,0 +1,277 @@
+<div class="add-beneficiary-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2 class="form-title">
+        <i class="pi pi-user-plus form-icon"></i>
+        Add New User
+      </h2>
+      <p class="form-subtitle">Create a new user account with appropriate permissions</p>
+    </div>
+    
+    <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="enhanced-form">
+      <div class="form-sections">       
+        <div class="form-section">
+          <h3 class="section-title">
+            <i class="pi pi-id-card section-icon"></i>
+            Basic Information
+          </h3>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">
+                <i class="pi pi-user label-icon"></i>
+                Username *
+              </label>
+              <div class="input-wrapper">
+                <input
+                  #nameInput
+                  type="text"
+                  class="form-input"
+                  formControlName="username"
+                  [ngClass]="{ 'error': submitted && f['username'].invalid }"
+                  placeholder="Enter username"
+                />
+                <i class="pi pi-user input-icon"></i>
+              </div>
+              <div *ngIf="submitted && f['username'].invalid" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                Username is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="pi pi-lock label-icon"></i>
+                Password *
+              </label>
+              <div class="input-wrapper">
+                <input
+                  type="password"
+                  class="form-input"
+                  formControlName="password"
+                  [ngClass]="{ 'error': submitted && f['password'].invalid }"
+                  placeholder="Enter password"
+                />
+                <i class="pi pi-lock input-icon"></i>
+              </div>
+              <div *ngIf="submitted && f['password'].invalid" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                <span *ngIf="f['password'].errors?.['required']">Password is required</span>
+                <span *ngIf="f['password'].errors?.['minlength']">Password must be at least 6 characters</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="pi pi-shield label-icon"></i>
+                Role *
+              </label>
+              <div class="dropdown-wrapper">
+                <p-dropdown
+                  [options]="roles"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="Select role"
+                  formControlName="role"
+                  styleClass="custom-dropdown"
+                  [showClear]="true"
+                ></p-dropdown>
+              </div>
+              <div *ngIf="submitted && f['role'].invalid" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                Role is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="pi pi-envelope label-icon"></i>
+                Email *
+              </label>
+              <div class="input-wrapper">
+                <input
+                  type="email"
+                  class="form-input"
+                  formControlName="contactInfo.email"
+                  [ngClass]="{ 'error': submitted && f['contactInfo.email'].invalid }"
+                  placeholder="Enter email address"
+                />
+                <i class="pi pi-envelope input-icon"></i>
+              </div>
+              <div *ngIf="submitted && f['contactInfo.email'].invalid" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                <span *ngIf="f['contactInfo.email'].errors?.['required']">Email is required</span>
+                <span *ngIf="f['contactInfo.email'].errors?.['email']">Invalid email format</span>
+              </div>
+            </div>
+          </div>
+        </div>        
+        <div *ngIf="f['role'].value === 'Beneficiary'" class="form-section beneficiary-section">
+          <h3 class="section-title">
+            <i class="pi pi-users section-icon"></i>
+            Beneficiary Details
+          </h3>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">
+                <i class="pi pi-tag label-icon"></i>
+                Display Name *
+              </label>
+              <div class="input-wrapper">
+                <input
+                  type="text"
+                  class="form-input"
+                  formControlName="name"
+                  [ngClass]="{ 'error': submitted && f['name'].invalid }"
+                  placeholder="Enter display name"
+                />
+                <i class="pi pi-tag input-icon"></i>
+              </div>
+              <div *ngIf="submitted && f['name'].invalid" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                Display name is required
+              </div>
+            </div>
+
+            <div class="form-group form-group-small">
+              <label class="form-label">
+                <i class="pi pi-calendar label-icon"></i>
+                Age *
+              </label>
+              <div class="input-wrapper">
+                <input
+                  type="number"
+                  class="form-input"
+                  formControlName="age"
+                  [ngClass]="{ 'error': submitted && f['age'].invalid }"
+                  placeholder="Age"
+                  min="18"
+                />
+                <i class="pi pi-calendar input-icon"></i>
+              </div>
+              <div *ngIf="submitted && f['age'].invalid" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                <span *ngIf="f['age'].errors?.['required']">Age is required</span>
+                <span *ngIf="f['age'].errors?.['min']">Minimum age is 18</span>
+              </div>
+            </div>
+
+            <div class="form-group form-group-small">
+              <label class="form-label">
+                <i class="pi pi-users label-icon"></i>
+                Gender *
+              </label>
+              <div class="dropdown-wrapper">
+                <p-dropdown
+                  [options]="genders"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="Select gender"
+                  formControlName="gender"
+                  styleClass="custom-dropdown"
+                  [showClear]="true"
+                ></p-dropdown>
+              </div>
+              <div *ngIf="submitted && f['gender'].invalid" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                Gender is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="pi pi-phone label-icon"></i>
+                Phone Number *
+              </label>
+              <div class="input-wrapper">
+                <input
+                  type="tel"
+                  class="form-input"
+                  formControlName="contactInfo.phone"
+                  [ngClass]="{ 'error': submitted && f['contactInfo.phone'].invalid }"
+                  placeholder="Enter phone number"
+                />
+                <i class="pi pi-phone input-icon"></i>
+              </div>
+              <div *ngIf="submitted && f['contactInfo.phone'].invalid" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                Phone number is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="pi pi-dollar label-icon"></i>
+                Budget *
+              </label>
+              <div class="input-wrapper">
+                <input
+                  type="number"
+                  class="form-input"
+                  formControlName="budget"
+                  [ngClass]="{ 'error': submitted && f['budget'].invalid }"
+                  placeholder="Enter budget amount"
+                  min="0"
+                  step="0.01"
+                />
+                <i class="pi pi-dollar input-icon"></i>
+              </div>
+              <div *ngIf="submitted && f['budget'].invalid" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                <span *ngIf="f['budget'].errors?.['required']">Budget is required</span>
+                <span *ngIf="f['budget'].errors?.['min']">Budget cannot be negative</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <i class="pi pi-bolt label-icon"></i>
+                Power Level *
+              </label>
+              <div class="input-wrapper">
+                <input
+                  type="number"
+                  class="form-input"
+                  formControlName="power"
+                  [ngClass]="{ 'error': submitted && f['power'].invalid }"
+                  placeholder="Enter power level"
+                  min="0"
+                />
+                <i class="pi pi-bolt input-icon"></i>
+              </div>
+              <div *ngIf="submitted && f['power'].invalid" class="error-message">
+                <i class="pi pi-exclamation-triangle"></i>
+                <span *ngIf="f['power'].errors?.['required']">Power level is required</span>
+                <span *ngIf="f['power'].errors?.['min']">Power cannot be negative</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          [routerLink]="['/beneficiaries']"
+        >
+          <i class="pi pi-times"></i>
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="loading || addForm.invalid"
+        >
+          <i class="pi pi-check" *ngIf="!loading"></i>
+          <i class="pi pi-spinner pi-spin" *ngIf="loading"></i>
+          {{ loading ? 'Creating...' : 'Create User' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <p-toast></p-toast>
+</div>
+

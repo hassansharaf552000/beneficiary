@@ -1,0 +1,127 @@
+<nav class="modern-navbar navbar navbar-dark fixed-top">
+  <div class="container-fluid px-4 d-flex align-items-center">
+    <a class="navbar-brand modern-brand d-flex align-items-center" routerLink="/">
+      <div class="logo-container me-3">
+        <i class="fas fa-users-cog"></i>
+      </div>
+      <div class="brand-text">
+        <span class="brand-main">Beneficiary</span>
+        <span class="brand-sub">HR</span>
+      </div>
+    </a>
+
+    <div class="ms-auto d-flex align-items-center">
+      <ul class="navbar-nav d-flex flex-row align-items-center me-3">        <li class="nav-item">
+          <a
+            class="nav-link modern-nav-link"
+            routerLink="/beneficiaries"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="onNavigate()"
+          >
+            <i class="fas fa-users me-2"></i>
+            <span>All Beneficiaries</span>
+          </a>
+        </li><li class="nav-item" *appHasRole="'Admin'">
+          <a
+            class="nav-link modern-nav-link"
+            routerLink="/beneficiaries/add"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="onNavigate()"
+          >
+            <i class="fas fa-plus-circle me-2"></i>
+            <span>Add User</span>
+          </a>
+        </li>        <li class="nav-item" *appHasRole="'Admin'">
+          <a
+            class="nav-link modern-nav-link"
+            routerLink="/beneficiaries/pending-requests"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="onNavigate()"
+          >
+            <i class="fas fa-clock me-2"></i>
+            <span>Pending Requests</span>
+          </a>
+        </li><li class="nav-item" *ngIf="auth.isLoggedIn() && auth.currentUser?.role !== 'Admin'">
+          <a
+            class="nav-link modern-nav-link"
+            [routerLink]="['/profile', auth.currentUser?.id]"
+            routerLinkActive="active"
+          >
+            <i class="fas fa-user-circle me-2"></i>
+            <span>My Profile</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center">
+        <ng-container *ngIf="!auth.isLoggedIn()">
+          <a 
+            class="btn btn-ghost-light nav-auth-btn me-2"
+            routerLink="/auth/login"
+          >
+            <i class="fas fa-sign-in-alt me-2"></i>Login
+          </a>
+          <a 
+            class="btn btn-primary-gradient nav-auth-btn"
+            routerLink="/auth/register"
+          >
+            <i class="fas fa-user-plus me-2"></i>Sign Up
+          </a>
+        </ng-container>
+
+        <div class="dropdown" *ngIf="auth.isLoggedIn()">
+          <a
+            class="nav-link dropdown-toggle user-profile-dropdown d-flex align-items-center"
+            href="#"
+            id="userDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <div class="user-avatar">
+              <div class="avatar-placeholder">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="status-indicator"></div>
+            </div>
+            <div class="user-info d-none d-lg-block ms-2">
+              <div class="user-name">{{ auth.currentUser?.username }}</div>
+              <div class="user-role">{{ auth.currentUser?.role }}</div>
+            </div>
+          </a>
+          
+          <ul class="dropdown-menu dropdown-menu-end modern-dropdown shadow-lg" aria-labelledby="userDropdown">
+            <li class="dropdown-header">
+              <div class="d-flex align-items-center">
+                <div class="user-avatar-small me-2">
+                  <div class="avatar-placeholder-small">
+                    <i class="fas fa-user"></i>
+                  </div>
+                </div>
+                <div>
+                  <div class="fw-semibold">{{ auth.currentUser?.username }}</div>
+                  <div class="text-muted small">{{ auth.currentUser?.email }}</div>
+                </div>
+              </div>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a
+                class="dropdown-item modern-dropdown-item text-danger"
+                (click)="logoutAndCollapse()"
+                style="cursor: pointer;"
+              >
+                <i class="fas fa-sign-out-alt me-3"></i>Sign Out
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="navbar-spacer"></div>
