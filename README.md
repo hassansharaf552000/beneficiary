@@ -19,6 +19,10 @@ A comprehensive Angular-based web application for managing beneficiaries with ro
 
 The Beneficiary Management System is a modern web application built with Angular 17 that allows organizations to manage beneficiaries effectively. The system provides different access levels for administrators and beneficiaries, enabling secure user management, profile handling, and a rating system for beneficiaries.
 
+> **📝 Note:** For testing purposes, use the following admin credentials:
+> - **Username:** admin
+> - **Password:** admin123
+
 ## ✨ Features
 
 - **User Authentication & Authorization**
