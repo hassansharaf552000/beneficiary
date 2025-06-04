@@ -663,8 +663,7 @@ Sort arrays by specified field and order.
 
 This project is configured with automated deployment to DigitalOcean App Platform. The application automatically deploys to the production environment when changes are pushed to the `main` branch.
 
-#### 🌐 Live Application
-**Production URL:** https://hammerhead-app-owbjh.ondigitalocean.app/
+
 
 #### 📋 CI/CD Workflow
 
