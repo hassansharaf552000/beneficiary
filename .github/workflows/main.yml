@@ -45,6 +45,7 @@ jobs:
           git rm -rf .
 
           # Copy ONLY the contents of dist/browser into the root of this branch.
+          #rt
           cp -r dist/browser/. .
 
           git add .
