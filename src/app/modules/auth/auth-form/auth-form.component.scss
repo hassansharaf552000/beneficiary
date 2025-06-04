@@ -1,5 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 .auth-container {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   background-size: 400% 400%;
@@ -8,12 +29,13 @@
   justify-content: center;
   align-items: center;
   font-family: 'Poppins', sans-serif;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
   padding: 20px;
   box-sizing: border-box;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   &::before {
     content: '';
@@ -189,6 +211,8 @@ form {
   text-align: center;
   border-radius: 0;
   position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
   
   &::before {
     content: '';
@@ -341,9 +365,12 @@ form {
   position: relative;
   overflow: hidden;
   width: 768px;
-  max-width: 100%;
+  max-width: 95vw;
   min-height: 520px;
+  max-height: calc(100vh - 40px);
   animation: containerEntrance 1s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: row;
   
   &::before {
     content: '';
@@ -704,9 +731,43 @@ form {
   }
 }
 
+@media (max-width: 1200px) {
+  .container {
+    width: 90%;
+    max-width: 700px;
+  }
+  
+  form {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    width: 95%;
+    max-width: 650px;
+  }
+  
+  .overlay-panel {
+    padding: 0 30px;
+    
+    h1 {
+      font-size: 1.8rem;
+    }
+    
+    p {
+      font-size: 13px;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .auth-container {
     padding: 15px;
+    min-height: 100vh;
+    align-items: flex-start;
+    padding-top: 30px;
+    overflow-y: auto;
     
     &::before {
       animation-duration: 25s;
@@ -715,23 +776,30 @@ form {
 
   .container {
     width: 100%;
-    min-height: 600px;
+    min-height: auto;
+    max-height: none;
     flex-direction: column;
     border-radius: 15px;
     animation: fadeInUp 0.8s ease-out, mobileFloat 4s ease-in-out infinite;
+    box-shadow: 
+      0 15px 50px rgba(102, 126, 234, 0.2),
+      0 5px 20px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
   }
 
   .form-container {
     width: 100% !important;
     position: relative;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    height: auto;
+    overflow: visible;
   }
 
   .sign-in-container,
   .sign-up-container {
     width: 100%;
     height: auto;
-    min-height: 400px;
+    min-height: auto;
     position: relative;
     left: 0 !important;
     transform: none !important;
@@ -741,12 +809,12 @@ form {
 
   .container.right-panel-active {
     .sign-in-container {
-      transform: translateY(-100%) !important;
-      opacity: 0;
+      display: none;
     }
     
     .sign-up-container {
-      transform: translateY(-100%) !important;
+      display: block;
+      transform: translateY(0) !important;
       opacity: 1;
     }
   }
@@ -756,17 +824,28 @@ form {
   }
 
   form {
-    padding: 30px 20px;
+    padding: 30px 25px;
     min-height: auto;
+    border-radius: 15px;
+    height: auto;
+    overflow: visible;
     
     h1 {
-      font-size: 1.8rem;
-      margin-bottom: 15px;
+      font-size: 1.9rem;
+      margin-bottom: 20px;
+    }
+    
+    p, span {
+      font-size: 13px;
+      margin: 15px 0 20px;
     }
   }
+  
   input {
     padding: 18px 55px 18px 20px; 
-    border-radius: 15px;
+    border-radius: 12px;
+    margin: 12px 0;
+    font-size: 15px;
   }
 
   .password-input-container {
@@ -775,6 +854,7 @@ form {
       min-width: 50px;
       padding: 0 18px !important;
       font-size: 16px;
+      right: 5px;
       
       i {
         font-size: 16px;
@@ -786,40 +866,59 @@ form {
     padding: 16px 40px;
     font-size: 14px;
     border-radius: 20px;
+    margin-top: 15px;
+    letter-spacing: 1px;
   }
 
-  .social-container a {
-    height: 50px;
-    width: 50px;
-    margin: 0 10px;
+  .social-container {
+    margin: 20px 0;
+    
+    a {
+      height: 50px;
+      width: 50px;
+      margin: 0 10px;
+      font-size: 18px;
+    }
+  }
+  
+  .error-text {
+    font-size: 12px;
+    margin-top: -8px;
+    margin-bottom: 12px;
   }
 }
 
-@keyframes mobileFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-3px); }
-}
-
-@media (max-width: 480px) {
+@media (max-width: 576px) {
   .auth-container {
-    padding: 10px;
+    padding: 12px;
+    padding-top: 20px;
+    padding-bottom: 80px;
   }
   
   .container {
-    min-height: 550px;
+    min-height: auto;
     border-radius: 12px;
+    margin: 10px 0;
   }
   
   form {
-    padding: 25px 15px;
+    padding: 25px 20px;
     
     h1 {
-      font-size: 1.6rem;
+      font-size: 1.7rem;
+      margin-bottom: 18px;
+    }
+    
+    span {
+      font-size: 12px;
     }
   }
-    input {
+  
+  input {
     padding: 16px 50px 16px 18px; 
-    margin: 8px 0;
+    margin: 10px 0;
+    font-size: 14px;
+    border-radius: 10px;
   }
 
   .password-input-container {
@@ -827,7 +926,72 @@ form {
       width: 45px;
       min-width: 45px;
       padding: 0 15px !important;
+      font-size: 15px;
+      right: 3px;
+      
+      i {
+        font-size: 15px;
+      }
+    }
+  }
+  
+  button {
+    padding: 15px 35px;
+    font-size: 13px;
+    border-radius: 18px;
+  }
+  
+  .social-container a {
+    height: 45px;
+    width: 45px;
+    margin: 0 8px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 10px;
+    align-items: flex-start;
+    padding-top: 20px;
+    padding-bottom: 80px;
+  }
+  
+  .container {
+    min-height: auto;
+    border-radius: 10px;
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+  form {
+    padding: 20px 15px;
+    
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+    
+    span {
+      font-size: 11px;
+      margin: 12px 0 18px;
+    }
+  }
+  
+  input {
+    padding: 14px 45px 14px 16px; 
+    margin: 8px 0;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+
+  .password-input-container {
+    .password-toggle-btn {
+      width: 40px;
+      min-width: 40px;
+      padding: 0 12px !important;
       font-size: 14px;
+      right: 2px;
       
       i {
         font-size: 14px;
@@ -836,9 +1000,89 @@ form {
   }
   
   button {
-    padding: 14px 35px;
+    padding: 13px 30px;
+    font-size: 12px;
+    border-radius: 15px;
+    letter-spacing: 0.5px;
+  }
+  
+  .social-container {
+    margin: 15px 0;
+    
+    a {
+      height: 40px;
+      width: 40px;
+      margin: 0 6px;
+      font-size: 14px;
+    }
+  }
+  
+  .error-text {
+    font-size: 10px;
+    margin-top: -6px;
+    margin-bottom: 10px;
+    padding: 4px 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .auth-container {
+    padding: 8px;
+    padding-top: 15px;
+    padding-bottom: 80px;
+  }
+  
+  .container {
+    min-height: auto;
+    border-radius: 8px;
+    margin: 10px 0;
+  }
+  
+  form {
+    padding: 18px 12px;
+    
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+    }
+  }
+  
+  input {
+    padding: 12px 40px 12px 14px;
+    font-size: 13px;
+    margin: 6px 0;
+  }
+  
+  .password-input-container {
+    .password-toggle-btn {
+      width: 35px;
+      min-width: 35px;
+      padding: 0 10px !important;
+      font-size: 13px;
+      
+      i {
+        font-size: 13px;
+      }
+    }
+  }
+  
+  button {
+    padding: 12px 25px;
+    font-size: 11px;
+    border-radius: 12px;
+  }
+  
+  .social-container a {
+    height: 35px;
+    width: 35px;
+    margin: 0 5px;
     font-size: 12px;
   }
+}
+
+@keyframes mobileFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
 }
 
 @keyframes spin {
@@ -1316,5 +1560,140 @@ button {
   
   &[type="password"] {
     font-family: 'Courier New', monospace, inherit !important; 
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  button {
+    min-height: 44px;
+    min-width: 44px;
+    
+    &:active {
+      transform: scale(0.95);
+      transition: transform 0.1s ease;
+    }
+  }
+  
+  .password-toggle-btn {
+    min-height: 44px;
+    min-width: 44px;
+    
+    &:active {
+      background: rgba(102, 126, 234, 0.1);
+    }
+  }
+  
+  .social-container a {
+    min-height: 44px;
+    min-width: 44px;
+    
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+  
+  input {
+    min-height: 44px;
+    
+    &:focus {
+      transform: none;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+    }
+  }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  .auth-container {
+    align-items: flex-start;
+    padding-top: 20px;
+    overflow-y: auto;
+  }
+  
+  .container {
+    min-height: auto;
+    margin: 20px 0;
+  }
+  
+  form {
+    padding: 20px;
+    
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+  }
+  
+  .social-container {
+    margin: 15px 0;
+  }
+  
+  input {
+    margin: 8px 0;
+    padding: 12px 45px 12px 16px;
+  }
+  
+  button {
+    padding: 12px 30px;
+    margin-top: 10px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 900px;
+  }
+  
+  .overlay-panel {
+    padding: 0 60px;
+    
+    h1 {
+      font-size: 2.2rem;
+    }
+    
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+  }
+  
+  form {
+    padding: 0 60px;
+    
+    h1 {
+      font-size: 2.2rem;
+    }
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .container {
+    box-shadow: 
+      0 0 0 0.5px rgba(255, 255, 255, 0.1),
+      0 10px 40px rgba(0, 0, 0, 0.15),
+      0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  button {
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.25);
+    
+    &:hover:not(:disabled) {
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .auth-container::before {
+    animation: none;
+  }
+  
+  .overlay {
+    animation: none;
   }
 }
