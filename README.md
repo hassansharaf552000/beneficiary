@@ -2,8 +2,13 @@
 
 A comprehensive Angular-based web application for managing beneficiaries with role-based access control, authentication, and rating system.
 
-## 📋 Table of Contents
 
+<video width="640" controls>
+  <source src="./demo/demo.mp4" type="video/mp4">
+</video>
+<br/>
+
+ ## 📋 Table of Contents
 - [Overview](#overview)
 - [Features](#features)
 - [Technology Stack](#technology-stack)
