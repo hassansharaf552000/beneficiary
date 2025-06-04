@@ -23,8 +23,6 @@ html, body {
 
 .auth-container {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,7 +34,6 @@ html, body {
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
-
   &::before {
     content: '';
     position: absolute;
@@ -48,21 +45,9 @@ html, body {
       radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
       radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
       radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
-    animation: floatBubbles 20s ease-in-out infinite;
   }
 }
 
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes floatBubbles {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  33% { transform: translateY(-10px) scale(1.1); }
-  66% { transform: translateY(5px) scale(0.9); }
-}
 
 h1 {
   font-weight: 600;
@@ -368,7 +353,7 @@ form {
   max-width: 95vw;
   min-height: 520px;
   max-height: calc(100vh - 40px);
-  animation: containerEntrance 1s cubic-bezier(0.4, 0, 0.2, 1);
+  // animation: containerEntrance 1s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: row;
   
@@ -436,7 +421,7 @@ form {
   transform: translateX(100%);
   opacity: 1;
   z-index: 5;
-  animation: slideInFromLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  // animation: slideInFromLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: 0.2s;
 }
 
@@ -573,7 +558,7 @@ form {
 
 .container.right-panel-active .overlay-left {
   transform: translateX(0);
-  animation: panelSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  // animation: panelSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .overlay-right {
@@ -584,7 +569,7 @@ form {
 
 .container.right-panel-active .overlay-right {
   transform: translateX(20%);
-  animation: panelSlideOut 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  // animation: panelSlideOut 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes panelSlideIn {
@@ -780,12 +765,11 @@ form {
     max-height: none;
     flex-direction: column;
     border-radius: 15px;
-    animation: fadeInUp 0.8s ease-out, mobileFloat 4s ease-in-out infinite;
-    box-shadow: 
-      0 15px 50px rgba(102, 126, 234, 0.2),
-      0 5px 20px rgba(0, 0, 0, 0.1);
+    // animation: fadeInUp 0.8s ease-out, mobileFloat 4s ease-in-out infinite;
+    box-shadow:       0 15px 50px rgba(102, 126, 234, 0.2),      0 5px 20px rgba(0, 0, 0, 0.1);
     margin: 20px 0;
-  }
+    // -webkit-animation: fadeInUp 0.8s ease-out, mobileFloat 4s ease-in-out infinite;
+}
 
   .form-container {
     width: 100% !important;
@@ -1154,10 +1138,6 @@ button:disabled {
   }
 }
 
-.container {
-  animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1), morphing 6s ease-in-out infinite;
-}
-
 button:not(:disabled):focus {
   animation: pulse 2s infinite;
 }
@@ -1200,11 +1180,10 @@ form > * {
 .form-error {
   .container {
     border: 2px solid #ef4444;
-    box-shadow: 
-      0 0 30px rgba(239, 68, 68, 0.4),
-      0 25px 50px rgba(0, 0, 0, 0.1);
+    box-shadow:       0 0 30px rgba(239, 68, 68, 0.4),      0 25px 50px rgba(0, 0, 0, 0.1);
     animation: errorShake 0.5s ease-in-out;
-  }
+    -webkit-animation: errorShake 0.5s ease-in-out;
+}
 }
 
 @keyframes errorShake {
