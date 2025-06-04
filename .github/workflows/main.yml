@@ -3,7 +3,7 @@ name: Build Angular Project
 on:
   push:
     branches:
-      - main  # Change this if needed
+      - main  # or your default branch
   pull_request:
     branches:
       - main
@@ -25,27 +25,29 @@ jobs:
       - name: Install Dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Build Angular App
+      - name: Build Angular App (client only)
         run: npm run build -- --configuration=production
 
       - name: Create or Switch to 'build' Branch
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          
-          # Fetch all branches
           git fetch origin
-          
-          # Check if 'build' branch exists
+
+          # If 'build' exists, check it out; otherwise create it
           if git show-ref --verify --quiet refs/remotes/origin/build; then
             git checkout build
           else
             git checkout -b build
           fi
-          
-          # Copy build output and push
+
+          # Remove everything in the build branch
           git rm -rf .
-          cp -r dist/browser/* .
+
+          # Copy ONLY the contents of dist/browser into the root of this branch.
+          # If your output path is actually dist/<project-name>/browser, adjust accordingly:
+          cp -r dist/browser/. .
+
           git add .
           git commit -m "Update build output"
           git push origin build --force
