@@ -207,10 +207,10 @@ post(requestInfo: any) {
     const { username, password } = req['body'];
     
     console.log('Login attempt - Current users in database:', this.persistentUsers.length);
-    console.log('Login attempt - Looking for username:', username);
+    console.log('Login attempt - Looking for username/email:', username);
     console.log('Login attempt - All usernames:', this.persistentUsers.map(u => u.username));
     
-    const matching = this.persistentUsers.find((u) => u.username === username && u.password === password);
+    const matching = this.persistentUsers.find((u) => (u.username === username || u.email === username) && u.password === password);
     
     if (matching) {
       console.log('Login successful for user:', matching.username);
